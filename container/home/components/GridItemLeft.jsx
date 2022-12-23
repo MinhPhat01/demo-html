@@ -13,7 +13,7 @@ import IconCalendar from "../../../components/icons/IconCalendar";
 
 export default function GridItemLeft() {
   return (
-    <Grid item xs={2}>
+    <Grid item xs={2} sx={{ zIndex: "88" }}>
       <Box
         sx={{
           background: "#fff",
