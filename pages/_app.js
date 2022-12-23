@@ -1,5 +1,10 @@
-import '../styles/globals.css'
+import ComponentThemeProvider from "../hocs/ThemeProvider";
+import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <ComponentThemeProvider>
+      <Component {...pageProps} />
+    </ComponentThemeProvider>
+  );
 }

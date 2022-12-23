@@ -1,8 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { usePopupState } from "material-ui-popup-state/hooks";
-import { bindHover, bindPopover } from "material-ui-popup-state";
-import HoverPopover from "material-ui-popup-state/HoverPopover";
 import IconHome from "../../../components/icons/IconHome";
 import IconBank from "../../../components/icons/IconBank";
 import IconArrowDown from "../../../components/icons/IconArrowDown";
@@ -11,20 +8,24 @@ import IconReport from "../../../components/icons/IconReport";
 import IconAds from "../../../components/icons/IconAds";
 import IconNoti from "../../../components/icons/IconNoti";
 import IconSetting from "../../../components/icons/IconSetting";
+import useHover from "../../../hooks/useHover";
 
 export default function Menu() {
-  const partner = usePopupState({
-    variant: "popover",
-    popupId: "partner",
-  });
-  const customer = usePopupState({
-    variant: "popover",
-    popupId: "customer",
-  });
-  const setting = usePopupState({
-    variant: "popover",
-    popupId: "setting",
-  });
+  const {
+    hover: showPartner,
+    handleShow: handleShowPartner,
+    handleHide: handleHidePartner,
+  } = useHover();
+  const {
+    hover: showCustomer,
+    handleShow: handleShowCustomer,
+    handleHide: handleHideCustomer,
+  } = useHover();
+  const {
+    hover: showSetting,
+    handleShow: handleShowSetting,
+    handleHide: handleHideSetting,
+  } = useHover();
   return (
     <Box
       sx={{
@@ -61,7 +62,8 @@ export default function Menu() {
         </Typography>
       </Box>
       <Box
-        {...bindHover(partner)}
+        onMouseOver={handleShowPartner}
+        onMouseOut={handleHidePartner}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -69,6 +71,7 @@ export default function Menu() {
           gap: "15px",
           cursor: "pointer",
           paddingBottom: "10px",
+          position: "relative",
         }}
       >
         <IconBank></IconBank>
@@ -83,96 +86,94 @@ export default function Menu() {
           Đối Tác
         </Typography>
         <IconArrowDown></IconArrowDown>
-        <HoverPopover
-          sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "#fcfcfd",
-              padding: "16px 0",
-            },
-          }}
-          {...bindPopover(partner)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          disableScrollLock={true}
-        >
+        {showPartner && (
           <Box
             sx={{
-              cursor: "pointer",
-
-              "& :hover": {
-                color: "white",
-                backgroundColor: "#1074BA",
-                transition: "color ease 0.3s",
-                borderRadius: "5px",
-              },
+              position: "absolute",
+              top: "40px",
+              left: 0,
+              backgroundColor: "#fff",
+              padding: "16px 0",
+              width: "150px",
+              boxShadow: 2,
+              borderRadius: "5px",
+              zIndex: "99",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
+                cursor: "pointer",
+
+                "& :hover": {
+                  color: "white",
+                  backgroundColor: "#1074BA",
+                  transition: "color ease 0.3s",
+                  borderRadius: "5px",
+                },
               }}
             >
-              Tài Khoản
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Thiết Lập Quán
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Lịch Sử
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Xử Lý Điểm
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Xử Lý Hình Ảnh
-            </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Tài Khoản
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Thiết Lập Quán
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Lịch Sử
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Xử Lý Điểm
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Xử Lý Hình Ảnh
+              </Typography>
+            </Box>
           </Box>
-        </HoverPopover>
+        )}
       </Box>
       <Box
-        {...bindHover(customer)}
+        onMouseOver={handleShowCustomer}
+        onMouseOut={handleHideCustomer}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -180,6 +181,7 @@ export default function Menu() {
           gap: "15px",
           cursor: "pointer",
           paddingBottom: "10px",
+          position: "relative",
         }}
       >
         <IconCustomer></IconCustomer>
@@ -194,60 +196,57 @@ export default function Menu() {
           Khách Hàng
         </Typography>
         <IconArrowDown></IconArrowDown>
-        <HoverPopover
-          sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "#fcfcfd",
-              padding: "16px 0",
-            },
-          }}
-          {...bindPopover(customer)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          disableScrollLock={true}
-        >
+        {showCustomer && (
           <Box
             sx={{
-              cursor: "pointer",
-
-              "& :hover": {
-                color: "white",
-                backgroundColor: "#1074BA",
-                transition: "color ease 0.3s",
-                borderRadius: "5px",
-              },
+              position: "absolute",
+              top: "40px",
+              left: 0,
+              backgroundColor: "#fff",
+              padding: "16px 0",
+              width: "150px",
+              boxShadow: 2,
+              borderRadius: "5px",
+              zIndex: "99",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
+                cursor: "pointer",
+
+                "& :hover": {
+                  color: "white",
+                  backgroundColor: "#1074BA",
+                  transition: "color ease 0.3s",
+                  borderRadius: "5px",
+                },
               }}
             >
-              Tài Khoản
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Lịch Sử
-            </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Tài Khoản
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Lịch Sử
+              </Typography>
+            </Box>
           </Box>
-        </HoverPopover>
+        )}
       </Box>
       <Box
         sx={{
@@ -316,7 +315,8 @@ export default function Menu() {
         </Typography>
       </Box>
       <Box
-        {...bindHover(setting)}
+        onMouseOver={handleShowSetting}
+        onMouseOut={handleHideSetting}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -324,6 +324,7 @@ export default function Menu() {
           gap: "15px",
           cursor: "pointer",
           paddingBottom: "10px",
+          position: "relative",
         }}
       >
         <IconSetting></IconSetting>
@@ -338,82 +339,78 @@ export default function Menu() {
           Cài Đặt
         </Typography>
         <IconArrowDown></IconArrowDown>
-        <HoverPopover
-          sx={{
-            "& .MuiPaper-root": {
-              backgroundColor: "#fcfcfd",
-              padding: "16px 0",
-            },
-          }}
-          {...bindPopover(setting)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          disableScrollLock={true}
-        >
+        {showSetting && (
           <Box
             sx={{
-              cursor: "pointer",
-
-              "& :hover": {
-                color: "white",
-                backgroundColor: "#1074BA",
-                transition: "color ease 0.3s",
-                borderRadius: "5px",
-              },
+              position: "absolute",
+              top: "40px",
+              left: 0,
+              backgroundColor: "#fff",
+              padding: "16px 0",
+              width: "150px",
+              boxShadow: 2,
+              borderRadius: "5px",
+              zIndex: "99",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
+                cursor: "pointer",
+                "& :hover": {
+                  color: "white",
+                  backgroundColor: "#1074BA",
+                  transition: "color ease 0.3s",
+                  borderRadius: "5px",
+                },
               }}
             >
-              Danh Mục
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Cấu Hình
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Avatar
-            </Typography>
-            <Typography
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                lineHeight: "26px",
-                color: "#2B2B2B",
-                fontWeight: "300",
-              }}
-            >
-              Người Dùng
-            </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Danh Mục
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Cấu Hình
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Avatar
+              </Typography>
+              <Typography
+                sx={{
+                  padding: "10px 20px",
+                  fontSize: "16px",
+                  lineHeight: "26px",
+                  color: "#2B2B2B",
+                  fontWeight: "300",
+                }}
+              >
+                Người Dùng
+              </Typography>
+            </Box>
           </Box>
-        </HoverPopover>
+        )}
       </Box>
     </Box>
   );
